@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#a9c9bb">
-<title>本の紹介カード v16</title>
+<title>本の紹介カード v18</title>
 <style>
 *{box-sizing:border-box}
 :root{--accent:#a9c9bb;--ink:#4c332b;--soft:#e2eee9;--paper:#faf8f2}
@@ -41,12 +41,8 @@ button.action{flex:1;padding:12px 10px;border:0;border-radius:10px;font-weight:8
 #savePanel{margin-top:12px;padding:12px;background:#f8f7f3;border:1px solid #ddd6ce;border-radius:12px;text-align:center;color:#4c332b;line-height:1.55}
 #savePanel p{margin:4px 0 8px;font-size:13px}
 #savePanel img{display:block;width:100%;height:auto;border-radius:6px;background:#fff}
-@media(max-width:700px){
- body{background:#f5f5f5}main{padding:10px}.grid{display:flex;flex-direction:column;gap:12px}.form-box{order:1}.preview-box{order:2;position:static}.box{padding:12px;border-radius:12px}
- header{padding:11px 14px}header b{font-size:16px}.actions{padding:8px;background:#fff;border-radius:12px;box-shadow:0 2px 12px #0002;margin-left:-4px;margin-right:-4px}button.action{font-size:14px}
-}
-
-.char-count{margin-top:6px;text-align:right;font-size:14px;color:#7b736d;}
+.char-count{margin-top:6px;text-align:right;font-size:14px;color:#7b736d}
+@media(max-width:700px){body{background:#f5f5f5}main{padding:10px}.grid{display:flex;flex-direction:column;gap:12px}.form-box{order:1}.preview-box{order:2;position:static}.box{padding:12px;border-radius:12px}header{padding:11px 14px}header b{font-size:16px}.actions{padding:8px;background:#fff;border-radius:12px;box-shadow:0 2px 12px #0002;margin-left:-4px;margin-right:-4px}button.action{font-size:14px}}
 </style>
 </head>
 <body>
@@ -55,216 +51,73 @@ button.action{flex:1;padding:12px 10px;border:0;border-radius:10px;font-weight:8
 <div class="grid">
 <section class="box form-box">
 <p class="section-title">① 本の情報を入力</p>
-<label>カードの色</label>
-<div class="palette" id="palette"></div>
+<label>カードの色</label><div class="palette" id="palette"></div>
 <div class="custom-wrap"><input id="customColor" type="color" value="#a9c9bb" aria-label="好きな色"><span>好きな色を自由に選ぶこともできます</span></div>
 <p class="hint">選んだ色に合わせて、背景・見出し・アクセント色をまとめて調整します。</p>
-
 <label>本の写真（入れなくてもOK・2枚まで）</label>
-<div class="file-grid">
-  <div class="file-card"><label for="photo1">写真1</label><input id="photo1" type="file" accept="image/*"><p class="file-note">表紙など</p></div>
-  <div class="file-card"><label for="photo2">写真2</label><input id="photo2" type="file" accept="image/*"><p class="file-note">中面・帯など</p></div>
-</div>
-
-<label for="title">書籍名（60文字まで）</label>
-<input id="title" maxlength="60" placeholder="例：また、どこかで会えたら">
-<label for="author">著者名（40文字まで）</label>
-<input id="author" maxlength="40" placeholder="例：寺地はるな">
-<label for="pub">出版社名</label>
-<input id="pub" maxlength="40" placeholder="例：中央公論新社">
-<label for="year">出版年</label>
-<input id="year" maxlength="20" placeholder="例：2023年">
-<label for="keywords">ジャンル</label>
-<input id="keywords" maxlength="60" placeholder="例：小説、青春、趣味、仕事、北京 など">
-<label for="introducer">紹介者名（無記名でも可）</label>
-<input id="introducer" maxlength="20" placeholder="例：山田花子">
+<div class="file-grid"><div class="file-card"><label for="photo1">写真1</label><input id="photo1" type="file" accept="image/*"><p class="file-note">表紙など</p></div><div class="file-card"><label for="photo2">写真2</label><input id="photo2" type="file" accept="image/*"><p class="file-note">中面・帯など</p></div></div>
+<label for="title">書籍名（60文字まで）</label><input id="title" maxlength="60" placeholder="例：また、どこかで会えたら">
+<label for="author">著者名（40文字まで）</label><input id="author" maxlength="40" placeholder="例：寺地はるな">
+<label for="pub">出版社名</label><input id="pub" maxlength="40" placeholder="例：中央公論新社">
+<label for="year">出版年</label><input id="year" maxlength="20" placeholder="例：2023年">
+<label for="keywords">ジャンル</label><input id="keywords" maxlength="60" placeholder="例：小説、青春、趣味、仕事、北京 など">
+<label for="introducer">紹介者名（無記名でも可）</label><input id="introducer" maxlength="20" placeholder="例：山田花子">
 <label for="status">ステータス</label>
-<select id="status">
-<option value="紹介のみ">紹介のみ</option><option value="お譲り可能">お譲り可能</option><option value="レンタル可能">レンタル可能</option><option value="お譲り・レンタル可能">お譲り・レンタル可能</option>
-</select>
+<select id="status"><option value="紹介のみ">紹介のみ</option><option value="お譲り可能">お譲り可能</option><option value="レンタル可能">レンタル可能</option><option value="お譲り・レンタル可能">お譲り・レンタル可能</option></select>
 <div id="conditionWrap" hidden><label for="condition">本の状態</label><select id="condition"><option value="非常に良い">非常に良い</option><option value="良い">良い</option><option value="可">可</option></select></div>
-<label for="blurb">紹介文（300文字まで）</label>
-<textarea id="blurb" maxlength="300" placeholder="この本のおすすめポイントや、どんな方に読んでほしいかなどを自由に書いてください。"></textarea>
-<div class="char-count" id="blurbCount">0 / 300文字</div><p class="help">完成画像では300文字以内でも表示スペースに収まるよう自動調整されます。長文の場合は文字が小さくなるため、200文字前後がおすすめです。</p>
+<label for="blurb">紹介文（300文字まで）</label><textarea id="blurb" maxlength="300" placeholder="この本のおすすめポイントや、どんな方に読んでほしいかなどを自由に書いてください。"></textarea>
+<div class="char-count" id="blurbCount">0 / 300文字</div>
+<p class="help">完成画像はスマートフォン向けの9:16縦長サイズです。紹介文は300文字以内で、文字数に合わせて自動調整されます。</p>
 <p class="help" style="margin-top:14px"><strong>💡 このページは下書きを保存しません。</strong><br>文章はスマホのメモアプリなどで作成しておき、ここにはコピー＆ペーストしてご利用ください。修正する場合は、メモアプリで文章を直してから、もう一度このページに入力してください。</p>
 </section>
-
 <section class="box preview-box">
-<p class="section-title">② 完成イメージ</p>
-<canvas id="c" width="1240" height="1754"></canvas>
-<div class="actions preview-actions"><button class="action s" id="share">📤 共有する</button><button class="action p" id="save">📥 画像として保存</button></div>
-<div id="savePanel" hidden class="save-panel"><p><b>画像ができました</b></p><p>スマートフォンでは、下の画像を<strong>長押しして「写真に保存」</strong>してください。</p><img id="savePreview" alt="保存用の本紹介カード"></div>
+<p class="section-title">② 完成イメージ（スマホ向け 9:16）</p>
+<canvas id="c" width="1080" height="1920"></canvas>
+<div class="actions"><button class="action s" id="share">📤 共有する</button><button class="action p" id="save">📥 画像として保存</button></div>
+<div id="savePanel" hidden><p><b>画像ができました</b></p><p>スマートフォンでは、下の画像を<strong>長押しして「写真に保存」</strong>してください。</p><img id="savePreview" alt="保存用の本紹介カード"></div>
 <p class="help">完成したカードはJPEG画像として保存できます。スマートフォンでは、保存した画像をWeChat・LINEなどで送れます。</p>
 <p class="help">入力内容や色、写真を変更すると、ここにリアルタイムで反映されます。</p>
 <p class="help"><strong>※このページでは下書き保存・自動保存は行いません。</strong> 完成画像を保存したあとに修正する場合は、元のメモなどを編集して、もう一度入力してください。</p>
-</section>
-</div>
-</main>
+</section></div></main>
 <script>
-const c=document.getElementById('c');
-let x=c.getContext('2d');
-let img1=null,img2=null;
-const $=id=>document.getElementById(id);
-const palettes=[
-{name:'ミント×チョコ',accent:'#a9c9bb',ink:'#4c332b',soft:'#e2eee9',paper:'#faf8f2'},
-{name:'ピンク×ボルドー',accent:'#e7b9c5',ink:'#6b303d',soft:'#f7e4e8',paper:'#fff9fa'},
-{name:'ブルー×ネイビー',accent:'#a9c9df',ink:'#243d55',soft:'#e4eff6',paper:'#f8fbfd'},
-{name:'グリーン×深緑',accent:'#b8cfad',ink:'#31523a',soft:'#e6efe2',paper:'#fafcf8'},
-{name:'ラベンダー×紫',accent:'#c8b9d9',ink:'#4d3d62',soft:'#eee8f3',paper:'#fbf9fd'},
-{name:'オレンジ×ブラウン',accent:'#e8bd91',ink:'#67422b',soft:'#f7eadc',paper:'#fffaf5'},
-{name:'モノトーン',accent:'#c7c7c7',ink:'#333333',soft:'#eeeeee',paper:'#fafafa'}];
+const c=document.getElementById('c'),x=c.getContext('2d');let img1=null,img2=null;const $=id=>document.getElementById(id);
+const palettes=[{name:'ミント×チョコ',accent:'#a9c9bb',ink:'#4c332b',soft:'#e2eee9',paper:'#faf8f2'},{name:'ピンク×ボルドー',accent:'#e7b9c5',ink:'#6b303d',soft:'#f7e4e8',paper:'#fff9fa'},{name:'ブルー×ネイビー',accent:'#a9c9df',ink:'#243d55',soft:'#e4eff6',paper:'#f8fbfd'},{name:'グリーン×深緑',accent:'#b8cfad',ink:'#31523a',soft:'#e6efe2',paper:'#fafcf8'},{name:'ラベンダー×紫',accent:'#c8b9d9',ink:'#4d3d62',soft:'#eee8f3',paper:'#fbf9fd'},{name:'オレンジ×ブラウン',accent:'#e8bd91',ink:'#67422b',soft:'#f7eadc',paper:'#fffaf5'},{name:'モノトーン',accent:'#c7c7c7',ink:'#333333',soft:'#eeeeee',paper:'#fafafa'}];
 function hexToRgb(h){h=h.replace('#','');return{r:parseInt(h.slice(0,2),16),g:parseInt(h.slice(2,4),16),b:parseInt(h.slice(4,6),16)}}
 function mix(a,b,t){let A=hexToRgb(a),B=hexToRgb(b);return '#'+[A.r,A.g,A.b].map((v,i)=>Math.round(v+(B[i]-v)*t).toString(16).padStart(2,'0')).join('')}
 function luminance(h){let{r,g,b}=hexToRgb(h);[r,g,b]=[r,g,b].map(v=>{v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)});return .2126*r+.7152*g+.0722*b}
-function makeTheme(accent){let dark=luminance(accent)>0.48?mix(accent,'#2f211b',.62):mix(accent,'#111111',.42);return{accent,ink:dark,soft:mix(accent,'#ffffff',.80),paper:mix(accent,'#ffffff',.95)}}
-function setTheme(theme){document.documentElement.style.setProperty('--accent',theme.accent);document.documentElement.style.setProperty('--ink',theme.ink);document.documentElement.style.setProperty('--soft',theme.soft);document.documentElement.style.setProperty('--paper',theme.paper);draw()}
-function selectTheme(theme,el){document.querySelectorAll('.swatch').forEach(b=>b.classList.remove('active'));if(el)el.classList.add('active');$('customColor').value=theme.accent;setTheme(theme)}
+function makeTheme(a){let dark=luminance(a)>0.48?mix(a,'#2f211b',.62):mix(a,'#111111',.42);return{accent:a,ink:dark,soft:mix(a,'#ffffff',.80),paper:mix(a,'#ffffff',.95)}}
+function setTheme(t){document.documentElement.style.setProperty('--accent',t.accent);document.documentElement.style.setProperty('--ink',t.ink);document.documentElement.style.setProperty('--soft',t.soft);document.documentElement.style.setProperty('--paper',t.paper);draw()}
+function selectTheme(t,el){document.querySelectorAll('.swatch').forEach(b=>b.classList.remove('active'));if(el)el.classList.add('active');$('customColor').value=t.accent;setTheme(t)}
 palettes.forEach((p,i)=>{let b=document.createElement('button');b.type='button';b.className='swatch'+(i===0?' active':'');b.title=p.name;b.setAttribute('aria-label',p.name);b.style.background=p.accent;b.onclick=()=>selectTheme(p,b);$('palette').appendChild(b)});
 $('customColor').oninput=e=>{document.querySelectorAll('.swatch').forEach(b=>b.classList.remove('active'));setTheme(makeTheme(e.target.value))};
 function wrap(t,w,f){x.font=f;let a=[];for(let p of String(t||'').split('\n')){let l='';for(let ch of p){if(x.measureText(l+ch).width>w&&l){a.push(l);l=ch}else l+=ch}a.push(l)}return a}
-function rr(a,b,w,h,r,col){x.fillStyle=col;x.beginPath();x.roundRect(a,b,w,h,r);x.fill()}
-function pill(text,x0,y0,w0,ink,soft){rr(x0,y0,w0,46,22,soft);x.fillStyle=ink;x.font='700 21px sans-serif';x.textAlign='center';x.fillText(text,x0+w0/2,y0+30);x.textAlign='left'}
+function rr(px,py,w,h,r,col){x.fillStyle=col;x.beginPath();x.roundRect(px,py,w,h,r);x.fill()}
+function pill(text,px,py,w,ink,soft){rr(px,py,w,48,24,soft);x.fillStyle=ink;x.font='700 22px sans-serif';x.textAlign='center';x.fillText(text,px+w/2,py+31);x.textAlign='left'}
 function value(id,placeholder){let v=$(id).value.trim();return{text:v||placeholder,empty:!v}}
-function drawPlaceholder(px,py,pw,ph,label){x.save();x.setLineDash([10,8]);x.strokeStyle='#c9c2bb';x.lineWidth=3;x.strokeRect(px+12,py+12,pw-24,ph-24);x.setLineDash([]);x.strokeStyle='#aab0ad';x.lineWidth=7;x.strokeRect(px+pw/2-42,py+ph/2-62,84,62);x.beginPath();x.arc(px+pw/2-14,py+ph/2-42,7,0,Math.PI*2);x.fillStyle='#aab0ad';x.fill();x.beginPath();x.moveTo(px+pw/2-34,py+ph/2-10);x.lineTo(px+pw/2-5,py+ph/2-38);x.lineTo(px+pw/2+12,py+ph/2-20);x.lineTo(px+pw/2+32,py+ph/2-8);x.stroke();x.fillStyle='#7e8885';x.font='700 24px sans-serif';x.textAlign='center';x.fillText('IMAGE',px+pw/2,py+ph/2+52);x.font='18px sans-serif';x.fillText(label,px+pw/2,py+ph/2+84);x.textAlign='left';x.restore()}
-function drawImageContain(img,px,py,pw,ph){
-  if(!img || !Number.isFinite(img.width) || !Number.isFinite(img.height) || img.width<=0 || img.height<=0){drawPlaceholder(px,py,pw,ph,'写真を読み込めませんでした');return false}
-  let s=Math.min(pw/img.width,ph/img.height),w=img.width*s,h=img.height*s;
-  try{x.save();x.fillStyle='#f7f4ee';x.fillRect(px,py,pw,ph);x.drawImage(img,px+(pw-w)/2,py+(ph-h)/2,w,h);x.restore();return true}catch(e){try{x.restore()}catch(_){} drawPlaceholder(px,py,pw,ph,'写真を読み込めませんでした');return false}
-}
-function photoNaturalHeight(imgs,pw,maxH){if(!imgs.length)return 0; let hs=imgs.map(img=>pw/(img.width/img.height)); return Math.min(maxH,Math.max(...hs));}
-function fieldBox(label, valueText, x0, y0, w0, h0, ink, soft, opts={}){
-  const {size=26, weight=500, placeholder=false, lines=2, minSize=18}=opts;
-  const labelW=Math.max(120, Math.min(w0-10, 30 + label.length*21));
-  pill(label,x0,y0,labelW,ink,soft);
-  const boxY=y0+58;
-  rr(x0,boxY,w0,h0,12,'#fff');
-  x.strokeStyle='#d5d0ca';x.lineWidth=2;x.stroke();
-  let fontSize=size, usedLines=[];
-  while(fontSize>=minSize){
-    const font=`${weight} ${fontSize}px sans-serif`;
-    usedLines=wrap(valueText,w0-34,font).slice(0,lines);
-    if(usedLines.length<=lines)break;
-    fontSize-=1;
-  }
-  const font=`${weight} ${fontSize}px sans-serif`;
-  usedLines=wrap(valueText,w0-34,font).slice(0,lines);
-  x.fillStyle=placeholder?mix(ink,'#fff',.42):ink;
-  x.font=font;
-  const lineH=fontSize+9;
-  usedLines.forEach((l,i)=>x.fillText(l,x0+17,boxY+fontSize+10+i*lineH));
-  return boxY+h0;
-}
-
-function fitText(text,maxW,fontFamily='sans-serif',weight=500,maxSize=40,minSize=16,maxLines=2){
-  let size=maxSize, lines=[];
-  while(size>=minSize){
-    const font=`${weight} ${size}px ${fontFamily}`;
-    lines=wrap(text,maxW,font);
-    if(lines.length<=maxLines)return {font,lines,size};
-    size-=1;
-  }
-  const font=`${weight} ${minSize}px ${fontFamily}`;
-  return {font,lines:wrap(text,maxW,font).slice(0,maxLines),size:minSize};
-}
-function topField(label,text,x0,y0,w0,ink,soft,opts={}){
-  const {labelW=105,size=30,weight=600,maxLines=2,placeholder=false}=opts;
-  pill(label,x0,y0,labelW,ink,soft);
-  const tx=x0+labelW+16, tw=w0-labelW-16;
-  const fit=fitText(text,tw,'sans-serif',weight,size,16,maxLines);
-  x.fillStyle=placeholder?mix(ink,'#fff',.45):ink;
-  x.font=fit.font;
-  fit.lines.forEach((l,i)=>x.fillText(l,tx,y0+31+i*(fit.size+8)));
-}
+function fit(text,maxW,maxSize,minSize,maxLines=2,weight=600){let size=maxSize;while(size>=minSize){let font=`${weight} ${size}px sans-serif`,lines=wrap(text,maxW,font);if(lines.length<=maxLines)return{font,lines,size};size--}let font=`${weight} ${minSize}px sans-serif`;return{font,lines:wrap(text,maxW,font).slice(0,maxLines),size:minSize}}
+function drawPlaceholder(px,py,pw,ph,label){x.save();x.setLineDash([10,8]);x.strokeStyle='#c9c2bb';x.lineWidth=3;x.strokeRect(px+10,py+10,pw-20,ph-20);x.setLineDash([]);x.fillStyle='#7e8885';x.font='700 28px sans-serif';x.textAlign='center';x.fillText('IMAGE',px+pw/2,py+ph/2);x.font='18px sans-serif';x.fillText(label,px+pw/2,py+ph/2+38);x.textAlign='left';x.restore()}
+function drawImageContain(img,px,py,pw,ph){if(!img){drawPlaceholder(px,py,pw,ph,'写真を入れてください');return}let s=Math.min(pw/img.width,ph/img.height),w=img.width*s,h=img.height*s;x.save();x.fillStyle='#f7f4ee';x.fillRect(px,py,pw,ph);x.drawImage(img,px+(pw-w)/2,py+(ph-h)/2,w,h);x.restore()}
+function field(label,text,px,py,w,h,ink,soft,placeholder=false){pill(label,px,py,w,ink,soft);rr(px,py+58,w,h,12,'#fff');x.strokeStyle='#d5d0ca';x.lineWidth=2;x.stroke();let f=fit(text,w-30,30,20,2,600);x.fillStyle=placeholder?mix(ink,'#fff',.45):ink;x.font=f.font;f.lines.forEach((l,i)=>x.fillText(l,px+15,py+58+f.size+10+i*(f.size+8)));}
 function draw(){
- const cs=getComputedStyle(document.documentElement),accent=cs.getPropertyValue('--accent').trim(),ink=cs.getPropertyValue('--ink').trim(),soft=cs.getPropertyValue('--soft').trim(),paper=cs.getPropertyValue('--paper').trim();
- x.textAlign='left';x.fillStyle=paper;x.fillRect(0,0,1240,1754);
- const introducer=value('introducer',''),title=value('title','書籍名'),author=value('author','著者名'),pub=value('pub','出版社名'),year=value('year','出版年'),keywords=value('keywords',''),blurb=value('blurb','紹介文');
- const status=$('status').value,condition=$('condition').value,showCondition=status==='お譲り可能'||status==='お譲り・レンタル可能';
- // Top metadata: 書籍名 / 作者名 / 出版社
- rr(35,32,1170,185,22,'#ffffff');
- x.strokeStyle=soft;x.lineWidth=3;x.stroke();
- topField('書籍名',title.text,55,55,1130,ink,soft,{labelW:105,size:40,weight:700,maxLines:2,placeholder:title.empty});
- topField('作者名',author.text,55,132,610,ink,soft,{labelW:105,size:29,weight:600,maxLines:2,placeholder:author.empty});
- topField('出版社',pub.text,685,132,500,ink,soft,{labelW:105,size:29,weight:600,maxLines:2,placeholder:pub.empty});
- // Main photo + right-side information
- const photoY=250,photoX=55,photoW=650,photoGap=10;
- const photoH=(img1&&img2)?photoNaturalHeight([img1,img2],(photoW-photoGap)/2,650):(img1||img2)?photoNaturalHeight([img1||img2],photoW,760):610;
- if(img1&&img2){const pw=(photoW-photoGap)/2;drawImageContain(img1,photoX,photoY,pw,photoH);drawImageContain(img2,photoX+pw+photoGap,photoY,pw,photoH)}
- else if(img1){drawImageContain(img1,photoX,photoY,photoW,photoH)}
- else if(img2){drawImageContain(img2,photoX,photoY,photoW,photoH)}
- else{drawPlaceholder(photoX,photoY,photoW,photoH,'ここに本の写真を入れてください')}
- const rx=750,rw=435;
- let rightY=250;
- rightY=fieldBox('出版年',year.text,rx,rightY,rw,86,ink,soft,{size:28,weight:600,placeholder:year.empty,lines:1,minSize:20});
- rightY+=24;
- rightY=fieldBox('ジャンル',keywords.text||'ジャンル',rx,rightY,rw,86,ink,soft,{size:27,weight:500,placeholder:keywords.empty,lines:2,minSize:18});
- rightY+=24;
- rightY=fieldBox('紹介者名',introducer.text||'無記名',rx,rightY,rw,86,ink,soft,{size:27,weight:500,placeholder:introducer.empty,lines:2,minSize:18});
- rightY+=24;
- rightY=fieldBox('ステータス',status,rx,rightY,rw,86,ink,soft,{size:27,weight:600,lines:1});
- // Introduction spans the lower area. Font size adapts to character count / actual wrapping.
- const blurbTop=Math.max(1050,photoY+photoH+65);
- const blurbH=Math.max(520,1754-blurbTop-55);
- const textX=55,textY=blurbTop+72,textW=1130,textH=blurbH-92;
- const raw=blurb.text||'';
- rr(55,blurbTop,1130,blurbH,18,'#ffffff');
- x.strokeStyle=soft;x.lineWidth=3;x.stroke();
- pill('紹介文',75,blurbTop+18,120,ink,soft);
- const fit=fitText(raw||'紹介文',textW-36,'sans-serif',500,raw.length<=80?38:raw.length<=140?34:raw.length<=200?30:raw.length<=250?27:24,16,12);
- x.fillStyle=blurb.empty?mix(ink,'#fff',.45):ink;x.font=fit.font;
- const lineH=fit.size+11;
- fit.lines.forEach((l,i)=>x.fillText(l,textX+18,textY+fit.size+i*lineH));
- x.fillStyle=mix(ink,'#fff',.18);x.font='20px sans-serif';x.textAlign='right';x.fillText(`${raw.length} / 300文字`,1165,blurbTop+blurbH-22);x.textAlign='left';
+ const cs=getComputedStyle(document.documentElement),ink=cs.getPropertyValue('--ink').trim(),soft=cs.getPropertyValue('--soft').trim(),paper=cs.getPropertyValue('--paper').trim();
+ x.textAlign='left';x.fillStyle=paper;x.fillRect(0,0,1080,1920);
+ const title=value('title','書籍名'),author=value('author','著者名'),pub=value('pub','出版社名'),year=value('year','出版年'),genre=value('keywords','ジャンル'),intro=value('introducer','無記名'),blurb=value('blurb','紹介文');const status=$('status').value,condition=$('condition').value,showCond=status==='お譲り可能'||status==='お譲り・レンタル可能';
+ const M=48,W=984;
+ rr(M,34,W,142,22,'#fff');x.strokeStyle=soft;x.lineWidth=3;x.stroke();pill('書籍名',68,55,112,ink,soft);let tf=fit(title.text,W-170,42,25,2,700);x.fillStyle=title.empty?mix(ink,'#fff',.45):ink;x.font=tf.font;tf.lines.forEach((l,i)=>x.fillText(l,198,55+tf.size+i*(tf.size+7)));pill('著者名',68,112,112,ink,soft);x.font='600 25px sans-serif';x.fillText(author.text,198,143);x.fillStyle=mix(ink,'#fff',.5);x.font='600 22px sans-serif';x.fillText(pub.text,590,143);
+ const photoY=205,photoH=545,photoW=984,gap=14;
+ if(img1&&img2){let pw=(photoW-gap)/2;drawImageContain(img1,M,photoY,pw,photoH);drawImageContain(img2,M+pw+gap,photoY,pw,photoH)}else drawImageContain(img1||img2,M,photoY,photoW,photoH);
+ const metaY=785,cellW=(W-20)/2,cellH=108;
+ field('出版年',year.text,M,metaY,cellW,cellH,ink,soft,year.empty);field('ジャンル',genre.text,M+cellW+20,metaY,cellW,cellH,ink,soft,genre.empty);
+ field('紹介者名',intro.text,M,metaY+145,cellW,cellH,ink,soft,intro.empty);field('ステータス',showCond?status+' / '+condition:status,M+cellW+20,metaY+145,cellW,cellH,ink,soft,false);
+ const introY=1080,introH=790;rr(M,introY,W,introH,20,'#fff');x.strokeStyle=soft;x.lineWidth=3;x.stroke();pill('紹介文',M+24,introY+22,120,ink,soft);
+ const raw=blurb.text;let size=raw.length<=50?42:raw.length<=100?38:raw.length<=150?35:raw.length<=200?32:raw.length<=250?29:26;const maxH=introH-120;let lines=[];while(size>=20){let f=`500 ${size}px sans-serif`;lines=wrap(raw,f?W-70:W-70,f);if(lines.length*(size+12)<=maxH)break;size--}if(size<20){size=20;lines=wrap(raw,W-70,`500 ${size}px sans-serif`)}x.fillStyle=blurb.empty?mix(ink,'#fff',.45):ink;x.font=`500 ${size}px sans-serif`;let lh=size+12;lines.forEach((l,i)=>x.fillText(l,M+28,introY+92+size+i*lh));x.fillStyle=mix(ink,'#fff',.25);x.font='18px sans-serif';x.textAlign='right';x.fillText(`${raw.length} / 300文字`,M+W-24,introY+introH-22);x.textAlign='left';
 }
-['title','author','pub','year','keywords','introducer','blurb'].forEach(id=>$(id).oninput=()=>draw());
-$('status').onchange=()=>{$('conditionWrap').hidden=!($('status').value==='お譲り可能'||$('status').value==='お譲り・レンタル可能');draw()};
-$('condition').onchange=()=>draw();$('conditionWrap').hidden=true;
-function imageToDataURL(file,maxSide=1400,quality=.78){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>{const i=new Image();i.onload=()=>{const scale=Math.min(1,maxSide/Math.max(i.width,i.height));const w=Math.round(i.width*scale),h=Math.round(i.height*scale);const cc=document.createElement('canvas');cc.width=w;cc.height=h;cc.getContext('2d').drawImage(i,0,0,w,h);resolve(cc.toDataURL('image/jpeg',quality))};i.onerror=reject;i.src=r.result};r.onerror=reject;r.readAsDataURL(file)})}
-function dataURLToImage(src){return new Promise((resolve,reject)=>{if(!src)return resolve(null);const i=new Image();i.onload=()=>resolve(i);i.onerror=reject;i.src=src})}
-function loadPhoto(inputId,setter){$(inputId).onchange=async e=>{let f=e.target.files[0];if(!f)return;try{const data=await imageToDataURL(f);const i=await dataURLToImage(data);setter(i);draw();}catch(err){alert('写真を読み込めませんでした。もう一度お試しください。')}}}
-loadPhoto('photo1',i=>img1=i);loadPhoto('photo2',i=>img2=i);
-// v16: 下書き保存機能は廃止。入力内容はページを閉じると保持されません。
-// 以前のバージョンが残したテキスト下書きだけ、初回表示時に削除します。
-try{
-  ['little-bites-book-card-v14','little-bites-book-card-v11'].forEach(k=>localStorage.removeItem(k));
-  if('indexedDB' in window){indexedDB.deleteDatabase('little-bites-book-card-db-v3');}
-}catch(e){}
-$('save').onclick=()=>{
-  const panel=$('savePanel');
-  const preview=$('savePreview');
-  c.toBlob(async blob=>{
-    if(!blob){alert('画像を作成できませんでした。もう一度お試しください。');return}
-    const file=new File([blob],'book_introduction.jpg',{type:'image/jpeg'});
-    const url=URL.createObjectURL(blob);
-    preview.src=url;
-    panel.hidden=false;
-    panel.scrollIntoView({behavior:'smooth',block:'center'});
-
-    // スマートフォンでは共有シートを開き、「画像を保存／写真に保存」へ進める。
-    // Safari/iOSではWebページからカメラロールへ直接保存することはできないため、
-    // 共有シートまたは表示画像の長押し保存を使う。
-    if(navigator.share && navigator.canShare && navigator.canShare({files:[file]})){
-      try{
-        await navigator.share({title:'本の紹介カード',files:[file]});
-        return;
-      }catch(e){
-        // ユーザーが共有シートを閉じた場合は、下の画像をそのまま表示しておく
-      }
-    }
-
-    // PC等では従来どおりファイルダウンロードも試す
-    const a=document.createElement('a');
-    a.download='book_introduction.jpg';
-    a.href=url;
-    a.style.display='none';
-    document.body.appendChild(a);
-    try{a.click()}catch(e){}
-    setTimeout(()=>a.remove(),1000);
-  },'image/jpeg',0.92);
-};
+['title','author','pub','year','keywords','introducer','blurb'].forEach(id=>$(id).oninput=()=>{if(id==='blurb')$('blurbCount').textContent=`${$(id).value.length} / 300文字`;draw()});$('status').onchange=()=>{$('conditionWrap').hidden=!(['お譲り可能','お譲り・レンタル可能'].includes($('status').value));draw()};$('condition').onchange=draw;$('conditionWrap').hidden=true;
+function imageToDataURL(file){return new Promise((resolve,reject)=>{let r=new FileReader();r.onload=()=>{let i=new Image();i.onload=()=>{let s=Math.min(1,1400/Math.max(i.width,i.height)),cc=document.createElement('canvas');cc.width=Math.round(i.width*s);cc.height=Math.round(i.height*s);cc.getContext('2d').drawImage(i,0,0,cc.width,cc.height);resolve(cc.toDataURL('image/jpeg',.78))};i.onerror=reject;i.src=r.result};r.onerror=reject;r.readAsDataURL(file)})}
+function loadPhoto(id,setter){$(id).onchange=async e=>{let f=e.target.files[0];if(!f)return;try{let d=await imageToDataURL(f),i=new Image();i.onload=()=>{setter(i);draw()};i.src=d}catch(e){alert('写真を読み込めませんでした。もう一度お試しください。')}}}loadPhoto('photo1',i=>img1=i);loadPhoto('photo2',i=>img2=i);
+$('save').onclick=()=>c.toBlob(async blob=>{if(!blob){alert('画像を作成できませんでした。');return}let file=new File([blob],'book_introduction.jpg',{type:'image/jpeg'}),url=URL.createObjectURL(blob);$('savePreview').src=url;$('savePanel').hidden=false;$('savePanel').scrollIntoView({behavior:'smooth',block:'center'});if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({title:'本の紹介カード',files:[file]});return}catch(e){}}let a=document.createElement('a');a.download='book_introduction.jpg';a.href=url;document.body.appendChild(a);try{a.click()}catch(e){}setTimeout(()=>a.remove(),1000)},'image/jpeg',.92);
 $('share').onclick=()=>c.toBlob(async b=>{let f=new File([b],'book_introduction.jpg',{type:'image/jpeg'});if(navigator.share&&navigator.canShare?.({files:[f]})){try{await navigator.share({title:'本の紹介カード',files:[f]})}catch(e){}}else alert('この端末では直接共有できません。「画像として保存」を使ってください。')},'image/jpeg');
-setTheme(palettes[0]);
-draw();
+setTheme(palettes[0]);draw();
 </script>
 </body>
 </html>
