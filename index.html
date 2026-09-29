@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#a9c9bb">
-<title>本の紹介カード v15</title>
+<title>本の紹介カード v16</title>
 <style>
 *{box-sizing:border-box}
 :root{--accent:#a9c9bb;--ink:#4c332b;--soft:#e2eee9;--paper:#faf8f2}
@@ -157,17 +157,37 @@ function fieldBox(label, valueText, x0, y0, w0, h0, ink, soft, opts={}){
   return boxY+h0;
 }
 
+function fitText(text,maxW,fontFamily='sans-serif',weight=500,maxSize=40,minSize=16,maxLines=2){
+  let size=maxSize, lines=[];
+  while(size>=minSize){
+    const font=`${weight} ${size}px ${fontFamily}`;
+    lines=wrap(text,maxW,font);
+    if(lines.length<=maxLines)return {font,lines,size};
+    size-=1;
+  }
+  const font=`${weight} ${minSize}px ${fontFamily}`;
+  return {font,lines:wrap(text,maxW,font).slice(0,maxLines),size:minSize};
+}
+function topField(label,text,x0,y0,w0,ink,soft,opts={}){
+  const {labelW=105,size=30,weight=600,maxLines=2,placeholder=false}=opts;
+  pill(label,x0,y0,labelW,ink,soft);
+  const tx=x0+labelW+16, tw=w0-labelW-16;
+  const fit=fitText(text,tw,'sans-serif',weight,size,16,maxLines);
+  x.fillStyle=placeholder?mix(ink,'#fff',.45):ink;
+  x.font=fit.font;
+  fit.lines.forEach((l,i)=>x.fillText(l,tx,y0+31+i*(fit.size+8)));
+}
 function draw(){
  const cs=getComputedStyle(document.documentElement),accent=cs.getPropertyValue('--accent').trim(),ink=cs.getPropertyValue('--ink').trim(),soft=cs.getPropertyValue('--soft').trim(),paper=cs.getPropertyValue('--paper').trim();
  x.textAlign='left';x.fillStyle=paper;x.fillRect(0,0,1240,1754);
- const headline=value('headline',''),introducer=value('introducer',''),title=value('title','書籍名'),author=value('author','著者名'),pub=value('pub','出版社名'),year=value('year','出版年'),keywords=value('keywords',''),blurb=value('blurb','紹介文');
+ const introducer=value('introducer',''),title=value('title','書籍名'),author=value('author','著者名'),pub=value('pub','出版社名'),year=value('year','出版年'),keywords=value('keywords',''),blurb=value('blurb','紹介文');
  const status=$('status').value,condition=$('condition').value,showCondition=status==='お譲り可能'||status==='お譲り・レンタル可能';
- // Header
- x.fillStyle=accent;x.fillRect(0,0,1240,205);
- x.fillStyle=ink;x.font='700 48px sans-serif';
- if(headline.text){wrap(headline.text,1120,x.font).slice(0,2).forEach((l,i)=>x.fillText(l,55,62+i*50))}
- else{x.fillStyle=mix(ink,'#fff',.35);x.font='700 27px sans-serif';x.fillText('全体タイトル／キャッチコピー（記入しなくても可）',55,62)}
- x.fillStyle=ink;x.font='700 34px sans-serif';x.fillText(introducer.empty?'紹介者名（無記名でも可）':introducer.text,55,158);
+ // Top metadata: 書籍名 / 作者名 / 出版社
+ rr(35,32,1170,185,22,'#ffffff');
+ x.strokeStyle=soft;x.lineWidth=3;x.stroke();
+ topField('書籍名',title.text,55,55,1130,ink,soft,{labelW:105,size:40,weight:700,maxLines:2,placeholder:title.empty});
+ topField('作者名',author.text,55,132,610,ink,soft,{labelW:105,size:29,weight:600,maxLines:2,placeholder:author.empty});
+ topField('出版社',pub.text,685,132,500,ink,soft,{labelW:105,size:29,weight:600,maxLines:2,placeholder:pub.empty});
  // Main photo + right-side information
  const photoY=250,photoX=55,photoW=650,photoGap=10;
  const photoH=(img1&&img2)?photoNaturalHeight([img1,img2],(photoW-photoGap)/2,650):(img1||img2)?photoNaturalHeight([img1||img2],photoW,760):610;
@@ -177,23 +197,26 @@ function draw(){
  else{drawPlaceholder(photoX,photoY,photoW,photoH,'ここに本の写真を入れてください')}
  const rx=750,rw=435;
  let rightY=250;
- rightY=fieldBox('ステータス',status,rx,rightY,435,64,ink,soft,{size:24,weight:600,lines:1});
- if(showCondition){rightY+=24;rightY=fieldBox('本の状態',condition,rx,rightY,435,64,ink,soft,{size:24,weight:600,lines:1});}
- rightY+=26;
- rightY=fieldBox('書籍名',title.text,rx,rightY,435,142,ink,soft,{size:34,weight:700,placeholder:title.empty,lines:3,minSize:25});
+ rightY=fieldBox('出版年',year.text,rx,rightY,rw,86,ink,soft,{size:28,weight:600,placeholder:year.empty,lines:1,minSize:20});
  rightY+=24;
- const colGap=18,colW=(rw-colGap)/2;
- const y1=rightY;
- fieldBox('著者名',author.text,rx,y1,colW,118,ink,soft,{size:24,weight:500,placeholder:author.empty,lines:3,minSize:18});
- fieldBox('出版社',pub.text,rx+colW+colGap,y1,colW,118,ink,soft,{size:24,weight:500,placeholder:pub.empty,lines:3,minSize:18});
- rightY=y1+118+58+24;
- fieldBox('出版年',year.text,rx,rightY,colW,86,ink,soft,{size:24,weight:500,placeholder:year.empty,lines:2,minSize:18});
- fieldBox('キーワード／ジャンルなど',keywords.text,rx+colW+colGap,rightY,colW,86,ink,soft,{size:21,weight:500,placeholder:keywords.empty,lines:3,minSize:17});
- // Introduction spans the lower area
- const blurbTop=Math.max(1035, photoY+photoH+70);
- const blurbH=Math.max(500,1754-blurbTop-85);
- const blurbLines=Math.max(1,Math.floor((blurbH-22)/(30+9)));
- fieldBox('紹介文',blurb.text,55,blurbTop,1130,blurbH,ink,soft,{size:30,weight:500,placeholder:blurb.empty,lines:blurbLines});
+ rightY=fieldBox('ジャンル',keywords.text||'ジャンル',rx,rightY,rw,86,ink,soft,{size:27,weight:500,placeholder:keywords.empty,lines:2,minSize:18});
+ rightY+=24;
+ rightY=fieldBox('紹介者名',introducer.text||'無記名',rx,rightY,rw,86,ink,soft,{size:27,weight:500,placeholder:introducer.empty,lines:2,minSize:18});
+ rightY+=24;
+ rightY=fieldBox('ステータス',status,rx,rightY,rw,86,ink,soft,{size:27,weight:600,lines:1});
+ // Introduction spans the lower area. Font size adapts to character count / actual wrapping.
+ const blurbTop=Math.max(1050,photoY+photoH+65);
+ const blurbH=Math.max(520,1754-blurbTop-55);
+ const textX=55,textY=blurbTop+72,textW=1130,textH=blurbH-92;
+ const raw=blurb.text||'';
+ rr(55,blurbTop,1130,blurbH,18,'#ffffff');
+ x.strokeStyle=soft;x.lineWidth=3;x.stroke();
+ pill('紹介文',75,blurbTop+18,120,ink,soft);
+ const fit=fitText(raw||'紹介文',textW-36,'sans-serif',500,raw.length<=80?38:raw.length<=140?34:raw.length<=200?30:raw.length<=250?27:24,16,12);
+ x.fillStyle=blurb.empty?mix(ink,'#fff',.45):ink;x.font=fit.font;
+ const lineH=fit.size+11;
+ fit.lines.forEach((l,i)=>x.fillText(l,textX+18,textY+fit.size+i*lineH));
+ x.fillStyle=mix(ink,'#fff',.18);x.font='20px sans-serif';x.textAlign='right';x.fillText(`${raw.length} / 300文字`,1165,blurbTop+blurbH-22);x.textAlign='left';
 }
 ['headline','introducer','title','author','pub','year','keywords','blurb'].forEach(id=>$(id).oninput=()=>draw());
 $('status').onchange=()=>{$('conditionWrap').hidden=!($('status').value==='お譲り可能'||$('status').value==='お譲り・レンタル可能');draw()};
@@ -202,7 +225,7 @@ function imageToDataURL(file,maxSide=1400,quality=.78){return new Promise((resol
 function dataURLToImage(src){return new Promise((resolve,reject)=>{if(!src)return resolve(null);const i=new Image();i.onload=()=>resolve(i);i.onerror=reject;i.src=src})}
 function loadPhoto(inputId,setter){$(inputId).onchange=async e=>{let f=e.target.files[0];if(!f)return;try{const data=await imageToDataURL(f);const i=await dataURLToImage(data);setter(i);draw();}catch(err){alert('写真を読み込めませんでした。もう一度お試しください。')}}}
 loadPhoto('photo1',i=>img1=i);loadPhoto('photo2',i=>img2=i);
-// v15: 下書き保存機能は廃止。入力内容はページを閉じると保持されません。
+// v16: 下書き保存機能は廃止。入力内容はページを閉じると保持されません。
 // 以前のバージョンが残したテキスト下書きだけ、初回表示時に削除します。
 try{
   ['little-bites-book-card-v14','little-bites-book-card-v11'].forEach(k=>localStorage.removeItem(k));
