@@ -232,14 +232,27 @@ try{
 $('save').onclick=()=>{
   const panel=$('savePanel');
   const preview=$('savePreview');
-  c.toBlob(blob=>{
+  c.toBlob(async blob=>{
     if(!blob){alert('画像を作成できませんでした。もう一度お試しください。');return}
+    const file=new File([blob],'book_introduction.jpg',{type:'image/jpeg'});
     const url=URL.createObjectURL(blob);
-    preview.onload=()=>URL.revokeObjectURL(url);
     preview.src=url;
     panel.hidden=false;
     panel.scrollIntoView({behavior:'smooth',block:'center'});
-    // PCなどdownload属性に対応する環境では、あわせて通常のダウンロードも試みる
+
+    // スマートフォンでは共有シートを開き、「画像を保存／写真に保存」へ進める。
+    // Safari/iOSではWebページからカメラロールへ直接保存することはできないため、
+    // 共有シートまたは表示画像の長押し保存を使う。
+    if(navigator.share && navigator.canShare && navigator.canShare({files:[file]})){
+      try{
+        await navigator.share({title:'本の紹介カード',files:[file]});
+        return;
+      }catch(e){
+        // ユーザーが共有シートを閉じた場合は、下の画像をそのまま表示しておく
+      }
+    }
+
+    // PC等では従来どおりファイルダウンロードも試す
     const a=document.createElement('a');
     a.download='book_introduction.jpg';
     a.href=url;
