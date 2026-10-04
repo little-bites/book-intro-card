@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#a9c9bb">
-<title>本の紹介カード v18</title>
+<title>本の紹介カード v19</title>
 <style>
 *{box-sizing:border-box}
 :root{--accent:#a9c9bb;--ink:#4c332b;--soft:#e2eee9;--paper:#faf8f2}
@@ -108,9 +108,16 @@ function draw(){
  if(img1&&img2){let pw=(photoW-gap)/2;drawImageContain(img1,M,photoY,pw,photoH);drawImageContain(img2,M+pw+gap,photoY,pw,photoH)}else drawImageContain(img1||img2,M,photoY,photoW,photoH);
  const metaY=785,cellW=(W-20)/2,cellH=108;
  field('出版年',year.text,M,metaY,cellW,cellH,ink,soft,year.empty);field('ジャンル',genre.text,M+cellW+20,metaY,cellW,cellH,ink,soft,genre.empty);
- field('紹介者名',intro.text,M,metaY+145,cellW,cellH,ink,soft,intro.empty);field('ステータス',showCond?status+' / '+condition:status,M+cellW+20,metaY+145,cellW,cellH,ink,soft,false);
+ field('紹介者名',intro.text,M,metaY+145,cellW,cellH,ink,soft,intro.empty);field('ステータス',showCond?status+' / '+condition,M+cellW+20,metaY+145,cellW,cellH,ink,soft,false);
  const introY=1080,introH=790;rr(M,introY,W,introH,20,'#fff');x.strokeStyle=soft;x.lineWidth=3;x.stroke();pill('紹介文',M+24,introY+22,120,ink,soft);
- const raw=blurb.text;let size=raw.length<=50?42:raw.length<=100?38:raw.length<=150?35:raw.length<=200?32:raw.length<=250?29:26;const maxH=introH-120;let lines=[];while(size>=20){let f=`500 ${size}px sans-serif`;lines=wrap(raw,f?W-70:W-70,f);if(lines.length*(size+12)<=maxH)break;size--}if(size<20){size=20;lines=wrap(raw,W-70,`500 ${size}px sans-serif`)}x.fillStyle=blurb.empty?mix(ink,'#fff',.45):ink;x.font=`500 ${size}px sans-serif`;let lh=size+12;lines.forEach((l,i)=>x.fillText(l,M+28,introY+92+size+i*lh));x.fillStyle=mix(ink,'#fff',.25);x.font='18px sans-serif';x.textAlign='right';x.fillText(`${raw.length} / 300文字`,M+W-24,introY+introH-22);x.textAlign='left';
+ const raw=blurb.text,maxW=W-70,maxH=introH-150;let size=46,lines=[],lineGap=1.30;
+ while(size>=24){let f=`500 ${size}px sans-serif`;lines=wrap(raw,maxW,f);let lh=size*lineGap;if(lines.length*lh<=maxH)break;size--}
+ if(size<24){size=24;lines=wrap(raw,maxW,`500 ${size}px sans-serif`)}
+ let lh=Math.min(size*lineGap,maxH/Math.max(lines.length,1));
+ if(lines.length>1)lh=Math.max(lh,size*1.15);
+ x.fillStyle=blurb.empty?mix(ink,'#fff',.45):ink;x.font=`500 ${size}px sans-serif`;
+ lines.forEach((l,i)=>x.fillText(l,M+28,introY+88+size+i*lh));
+ x.fillStyle=mix(ink,'#fff',.25);x.font='18px sans-serif';x.textAlign='right';x.fillText(`${raw.length} / 300文字`,M+W-24,introY+introH-22);x.textAlign='left';
 }
 ['title','author','pub','year','keywords','introducer','blurb'].forEach(id=>$(id).oninput=()=>{if(id==='blurb')$('blurbCount').textContent=`${$(id).value.length} / 300文字`;draw()});$('status').onchange=()=>{$('conditionWrap').hidden=!(['お譲り可能','お譲り・レンタル可能'].includes($('status').value));draw()};$('condition').onchange=draw;$('conditionWrap').hidden=true;
 function imageToDataURL(file){return new Promise((resolve,reject)=>{let r=new FileReader();r.onload=()=>{let i=new Image();i.onload=()=>{let s=Math.min(1,1400/Math.max(i.width,i.height)),cc=document.createElement('canvas');cc.width=Math.round(i.width*s);cc.height=Math.round(i.height*s);cc.getContext('2d').drawImage(i,0,0,cc.width,cc.height);resolve(cc.toDataURL('image/jpeg',.78))};i.onerror=reject;i.src=r.result};r.onerror=reject;r.readAsDataURL(file)})}
