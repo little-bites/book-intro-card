@@ -47,7 +47,7 @@ else{const g=document.createElement("div");g.className="options";q.options.forEa
 $("back").style.visibility=n===0?"hidden":"visible";$("next").textContent=n===qs.length-1?"冒険の記録を見る！ ✨":"次のステージへ →";}
 function renderOptions(){[...$("area").querySelectorAll(".opt")].forEach((b,i)=>b.classList.toggle("sel",qs[n].options[i][1]===ans[n].choice));}
 function esc(s){return String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])).replace(/\n/g,"<br>");}
-function answerText(q,a){return q.fields?q.fields.map(([k,l])=>l+"："+(a[k]||"（未入力）")).join("<br>"):a.choice||"（未選択）";}
+function answerText(q,a){return q.fields?q.fields.map(([k,l])=>esc(l+"："+(a[k]||"（未入力）"))).join("<br>"):esc(a.choice||"（未選択）");}
 function finish(){ $("summary").innerHTML="<div class='answer'><b>ニックネーム</b>"+esc(nickname)+"</div>"+qs.map((q,i)=>"<div class='answer'><b>"+(i+1)+". "+esc(q.q)+"</b>"+answerText(q,ans[i])+"</div>").join("");show("done");}
 $("start").onclick=()=>{if(isClosed()){show("closed");return;}nickname=$("nickname").value.trim();if(!nickname){alert("ニックネームを入力してください。");return;}n=0;show("quiz");render();};
 $("back").onclick=()=>{if(n>0){n--;render();}};
