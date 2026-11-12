@@ -13,7 +13,7 @@ function doPost(e) {
     const sheet = getResponseSheet();
     const row = [new Date(), nickname, ...data.answers.map(a => {
       if (typeof a.answer === "string") return a.answer.slice(0,2000);
-      return JSON.stringify(a.answer || {}).slice(0,2000);
+      return Object.entries(a.answer || {}).map(([label, value]) => label + "：" + String(value || "")).join(" / ").slice(0,2000);
     })];
     sheet.appendRow(row);
     return output({ok:true});
