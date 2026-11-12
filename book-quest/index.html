@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#eaf5ef">
+<title>BOOK QUEST｜本好きたちの、ちょっとした冒険</title>
+<style>
+:root{--ink:#263b35;--muted:#71817a;--green:#25866d;--line:#dce8df;--cream:#fffdf7}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 8% 10%,#f8e8cb 0 7%,transparent 7.2%),radial-gradient(circle at 92% 85%,#dcefe6 0 10%,transparent 10.2%),#f4f7f1;color:var(--ink);font-family:"Yu Gothic",Meiryo,sans-serif;display:flex;justify-content:center;align-items:center;padding:16px}
+.app{width:min(100%,650px);background:var(--cream);border:1px solid #e5eadf;border-radius:26px;box-shadow:0 18px 55px #315b4618;overflow:hidden}.top{height:8px;background:linear-gradient(90deg,#80c9ad,#f3c17c,#a8c9e2)}.inner{padding:clamp(20px,5vw,40px)}.brand{display:flex;justify-content:space-between;color:#71817a;font-size:11px;font-weight:bold;letter-spacing:.12em}.brand b{color:var(--green);font-size:15px}.screen{display:none;animation:up .3s ease}.screen.active{display:block}@keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.hero{text-align:center;padding:25px 0 20px}.art{font-size:70px}.eyebrow{color:var(--green);font-size:11px;letter-spacing:.16em;font-weight:bold;margin:12px}.hero h1{font-size:clamp(36px,9vw,54px);margin:8px}.hero h1 span{color:var(--green)}.sub{color:var(--muted);font-size:14px;line-height:1.8}.btn{border:0;border-radius:999px;background:var(--green);color:white;font-weight:bold;padding:15px 24px;cursor:pointer;box-shadow:0 5px 0 #17664f}.btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}.btn:active{transform:translateY(3px);box-shadow:0 2px 0 #17664f}
+.fieldgroup{display:grid;gap:7px;margin:16px 0;text-align:left}.fieldgroup label{font-size:12px;font-weight:bold;color:#557267}.field{width:100%;min-height:47px;border:1.5px solid var(--line);border-radius:13px;padding:12px 14px;background:white;font:inherit;outline:none}.field:focus{border-color:var(--green);box-shadow:0 0 0 3px #25866d18}.field.area{min-height:105px;resize:vertical}
+.progressrow{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;font-weight:bold;margin:25px 0 8px}.track{height:8px;background:#edf1e9;border-radius:20px;overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,#76c5a7,#f3b36f);transition:width .3s}.pill{display:inline-block;background:#e7f4ec;color:#26745d;border-radius:99px;padding:7px 12px;font-size:11px;font-weight:bold;letter-spacing:.1em;margin:22px 0 12px}
+h2{font-size:clamp(22px,5.5vw,30px);line-height:1.5;text-align:center;margin:0 0 10px}.hint{text-align:center;color:var(--muted);font-size:13px;line-height:1.7;margin:0 0 20px}.options{display:grid;grid-template-columns:1fr 1fr;gap:10px}.opt{border:1.5px solid var(--line);border-radius:16px;padding:16px 12px;background:white;cursor:pointer;text-align:center;font-weight:bold;min-height:84px}.opt.sel{background:#eaf6ef;border:2px solid var(--green);padding:15px 11px}.opt span{display:block;font-size:25px;margin-bottom:7px}.nav{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:22px}.back{border:0;background:none;color:var(--muted);font-weight:bold;cursor:pointer;padding:12px}.next{min-width:155px}.center{text-align:center}.answers{background:#f0f7f1;border:1px dashed #a8cbb6;border-radius:16px;padding:16px;text-align:left;margin:20px 0}.answer{padding:10px 0;border-bottom:1px solid #dce8df;font-size:13px;line-height:1.7}.answer:last-child{border:0}.answer b{display:block;color:var(--green);margin-bottom:3px}.notice{background:#fff4df;border-radius:13px;padding:12px;color:#76552f;font-size:12px;line-height:1.7;margin:14px 0}.small{font-size:11px;color:#9aa69e;text-align:center;margin-top:18px}
+@media(max-width:420px){body{padding:8px}.inner{padding:20px 16px}.options{gap:8px}.opt{font-size:13px;padding:13px 8px}}
+</style></head><body><main class="app"><div class="top"></div><div class="inner">
+<div class="brand"><span>📖 <b>BOOK QUEST</b></span><span>READING CLUB EDITION</span></div>
+<section id="home" class="screen active"><div class="hero"><div class="art">📚✨</div><div class="eyebrow">YOUR LITTLE READING ADVENTURE</div><h1>BOOK <span>QUEST</span></h1><p class="sub">本好きたちの、ちょっとした冒険。<br>10の質問で、本の思い出を掘り起こそう！</p><p class="sub">正解も不正解もありません。気軽にどうぞ。</p></div>
+<div class="fieldgroup"><label for="nickname">ニックネーム（必須）</label><input class="field" id="nickname" maxlength="30" placeholder="みんなに呼ばれている名前など"></div>
+<div class="notice" id="deadlineNotice">回答期限：2026年11月19日（木）23:59（日本時間）<br>回答は締め切り後に集計し、読書会で発表する予定です。</div>
+<div class="center"><button class="btn" id="start">冒険をはじめる！ →</button></div><p class="small">全10ステージ ／ 回答はニックネーム付きで集計されます</p></section>
+<section id="quiz" class="screen"><div class="progressrow"><span id="stage">STAGE 01</span><span id="count">1 / 10</span></div><div class="track"><div class="fill" id="fill"></div></div><div class="pill" id="label">QUESTION 01</div><h2 id="question"></h2><p class="hint" id="hint"></p><div id="area"></div><div class="nav"><button class="back" id="back">← もどる</button><button class="btn next" id="next">次のステージへ →</button></div></section>
+<section id="done" class="screen center"><div class="pill">QUEST COMPLETE!</div><div style="font-size:68px;margin:16px">🎉📚</div><h2>冒険の記録が完成しました！</h2><p class="sub">回答を送信して、ミッション完了です。<br>送信後の修正はできませんので、内容を確認してください。</p><div class="answers" id="summary"></div><div id="sendStatus" class="notice">送信準備ができました。</div><button class="btn" id="send">回答を送信する！</button><p class="small">送信は1回だけ行ってください。</p></section>
+<section id="closed" class="screen center"><div style="font-size:65px">⏰📚</div><h2>今回の冒険は終了しました！</h2><p class="sub">回答期限を過ぎたため、受付を終了しました。<br>ご協力ありがとうございました。</p></section>
+</div></main>
+<script src="config.js"></script>
+<script>
+const DEADLINE = new Date("2026-11-19T23:59:00+09:00");
+const qs=[
+{q:"積読の山の頂上にある本",hint:"いつか読むつもりで、ずっとそこにいる一冊は？",fields:[["title","書名"],["author","作者名"]]},
+{q:"読み始めたけど、途中で止まっている本",hint:"続きを待っている本、ありませんか？ 中断した理由も、覚えていたらぜひ。",fields:[["title","書名"],["author","作者名"]]},
+{q:"子どもの頃、好きだった本は？",hint:"あの頃の自分を夢中にさせた一冊。絵本・児童書・図鑑・マンガも大歓迎！",fields:[["title","書名"],["author","作者名"]]},
+{q:"本を読むなら、どんな場所？",hint:"あなたの理想の読書スポットは？ 現実の場所でも、妄想の場所でも。",options:[["🏡","家でくつろいで"],["☕","カフェでまったり"],["🌳","公園・自然の中"],["🚃","電車や移動中"],["📚","図書館・書店"],["🌙","夜の静かな場所"]]},
+{q:"本の登場人物、一人だけ友達にするなら？",hint:"物語の世界から、友達を一人招待！ 頼れる人？面白い人？一緒に冒険したい人？",fields:[["title","書名"],["character","キャラクター名"]]},
+{q:"もう一度、記憶を消して読みたい本は？",hint:"初めて読んだときの衝撃を、もう一度。ネタバレ厳禁の一冊をどうぞ。",fields:[["title","書名"],["author","作者名"]]},
+{q:"記憶に残る本の帯ありませんか？",hint:"本そのものより、帯の言葉が忘れられないことも。帯の内容は、覚えている範囲でOKです。",fields:[["title","書名"],["obi","帯の内容（覚えている範囲でOK）"]]},
+{q:"映画を見てから原作を読むか？ 原作を読んでから映画を見るか？",hint:"永遠のテーマ！？あなたはどっち派？ 理由や、例外パターンもあれば教えてください。",options:[["🎬","映画が先！"],["📖","原作が先！"],["🔀","作品によって違う"],["🙈","どちらも見ない・読まないことも"]]},
+{q:"若気の至り、ジャケ買いした本ありませんか？",hint:"表紙に惚れて、つい買ってしまったあの本。結果が良くても悪くても、思い出としてぜひ。",fields:[["title","書名"],["author","作者名"]]},
+{q:"こんなはずでは...思ってたのと違う！？いろんな意味で裏切られた本",hint:"良い意味でも、そうでない意味でも。期待と違った展開、内容、読後感……忘れられない一冊は？",fields:[["title","書名"],["author","作者名"]]}
+];
+let n=0,ans=qs.map(()=>({})),nickname="";
+const $=id=>document.getElementById(id);
+function isClosed(){return Date.now()>DEADLINE.getTime();}
+function show(id){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));$(id).classList.add("active");window.scrollTo({top:0,behavior:"smooth"});}
+function render(){const q=qs[n];$("stage").textContent="STAGE "+String(n+1).padStart(2,"0");$("count").textContent=(n+1)+" / "+qs.length;$("fill").style.width=((n+1)/qs.length*100)+"%";$("label").textContent="QUESTION "+String(n+1).padStart(2,"0");$("question").textContent=q.q;$("hint").textContent=q.hint;$("area").innerHTML="";
+if(q.fields){q.fields.forEach(([key,label])=>{const wrap=document.createElement("div");wrap.className="fieldgroup";const lab=document.createElement("label");lab.textContent=label;const inp=document.createElement(key==="obi"?"textarea":"input");inp.className="field"+(key==="obi"?" area":"");if(key!=="obi")inp.type="text";inp.maxLength=500;inp.placeholder="ここに入力（空欄でも次へ進めます）";inp.value=ans[n][key]||"";inp.addEventListener("input",()=>ans[n][key]=inp.value);wrap.append(lab,inp);$("area").appendChild(wrap);});}
+else{const g=document.createElement("div");g.className="options";q.options.forEach(([emoji,label])=>{const b=document.createElement("button");b.className="opt"+(ans[n].choice===label?" sel":"");b.innerHTML="<span>"+emoji+"</span>"+label;b.onclick=()=>{ans[n].choice=label;renderOptions();};g.appendChild(b);});$("area").appendChild(g);}
+$("back").style.visibility=n===0?"hidden":"visible";$("next").textContent=n===qs.length-1?"冒険の記録を見る！ ✨":"次のステージへ →";}
+function renderOptions(){[...$("area").querySelectorAll(".opt")].forEach((b,i)=>b.classList.toggle("sel",qs[n].options[i][1]===ans[n].choice));}
+function esc(s){return String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])).replace(/\n/g,"<br>");}
+function answerText(q,a){return q.fields?q.fields.map(([k,l])=>l+"："+(a[k]||"（未入力）")).join("<br>"):a.choice||"（未選択）";}
+function finish(){ $("summary").innerHTML="<div class='answer'><b>ニックネーム</b>"+esc(nickname)+"</div>"+qs.map((q,i)=>"<div class='answer'><b>"+(i+1)+". "+esc(q.q)+"</b>"+answerText(q,ans[i])+"</div>").join("");show("done");}
+$("start").onclick=()=>{if(isClosed()){show("closed");return;}nickname=$("nickname").value.trim();if(!nickname){alert("ニックネームを入力してください。");return;}n=0;show("quiz");render();};
+$("back").onclick=()=>{if(n>0){n--;render();}};
+$("next").onclick=()=>{if(isClosed()){show("closed");return;}if(n<qs.length-1){n++;render();}else finish();};
+$("send").onclick=async()=>{if(isClosed()){show("closed");return;}const endpoint=window.BOOKQUEST_ENDPOINT||"";if(!endpoint){$("sendStatus").textContent="回答保存先がまだ設定されていません。管理者による設定完了後にご利用ください。";return;}
+$("send").disabled=true;$("sendStatus").textContent="送信しています…";
+const payload={nickname,submittedAt:new Date().toISOString(),answers:qs.map((q,i)=>({question:q.q,answer:q.fields?Object.fromEntries(q.fields.map(([k,l])=>[l,ans[i][k]||""])):(ans[i].choice||"")}))};
+try{await fetch(endpoint,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},body:new URLSearchParams({payload:JSON.stringify(payload)})});$("sendStatus").textContent="送信処理を完了しました。ご協力ありがとうございました！";$("send").textContent="送信済み";}catch(e){$("send").disabled=false;$("sendStatus").textContent="送信できませんでした。通信環境を確認して、もう一度お試しください。";}};
+if(isClosed())show("closed");
+</script></body></html>
