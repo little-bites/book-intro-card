@@ -1,11 +1,9 @@
-const DEADLINE = new Date("2026-11-19T23:59:00+09:00");
 // Apps Script側で、回答保存先スプレッドシートのIDを設定してください。
 const SPREADSHEET_ID = "ここにスプレッドシートIDを貼り付け";
 const HEADERS = ["送信日時","ニックネーム", ...Array.from({length:10},(_,i)=>"Q"+(i+1))];
 
 function doPost(e) {
   try {
-    if (new Date() > DEADLINE) return output({ok:false, message:"受付期間は終了しました。"});
     const raw = e && e.parameter && e.parameter.payload;
     if (!raw) return output({ok:false, message:"データがありません。"});
     const data = JSON.parse(raw);
