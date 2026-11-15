@@ -1,5 +1,6 @@
 const DEADLINE = new Date("2026-11-19T23:59:00+09:00");
-const SPREADSHEET_ID = "15o5lqGeQjxadN1NXFXIbquucDJtNShYFFbZP3MinSsY";
+// Apps Script側で、回答保存先スプレッドシートのIDを設定してください。
+const SPREADSHEET_ID = "ここにスプレッドシートIDを貼り付け";
 const HEADERS = ["送信日時","ニックネーム", ...Array.from({length:10},(_,i)=>"Q"+(i+1))];
 
 function doPost(e) {
@@ -13,7 +14,6 @@ function doPost(e) {
     if (!Array.isArray(data.answers) || data.answers.length !== 10) {
       return output({ok:false, message:"回答形式が正しくありません。"});
     }
-
     const sheet = getResponseSheet();
     const row = [new Date(), nickname, ...data.answers.map(a => {
       if (typeof a.answer === "string") return a.answer.slice(0,2000);
@@ -27,13 +27,8 @@ function doPost(e) {
     return output({ok:false, message:String(err)});
   }
 }
-
-function doGet() {
-  return output({ok:true, message:"BOOK QUEST受付API"});
-}
-
+function doGet() { return output({ok:true, message:"BOOK QUEST受付API"}); }
 function getResponseSheet() {
-  // ウェブアプリ実行時にも保存先を確実に指定するため、IDで直接開く
   const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
   let sheet = ss.getSheetByName("回答一覧");
   if (!sheet) sheet = ss.insertSheet("回答一覧");
@@ -43,8 +38,6 @@ function getResponseSheet() {
   }
   return sheet;
 }
-
 function output(obj) {
-  return ContentService.createTextOutput(JSON.stringify(obj))
-    .setMimeType(ContentService.MimeType.JSON);
+  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
 }
